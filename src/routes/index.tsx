@@ -1,4 +1,5 @@
-import { Button, Container, Flex, NumberInput, Text } from '@mantine/core'
+import MesComponent from '@/components/MesComponent'
+import { Button, Container, Flex, NumberInput, Text, Grid } from '@mantine/core'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
@@ -19,6 +20,17 @@ function App() {
         <NumberInput placeholder="0" />
         <Button size="md">Calcular</Button>
       </Flex>
+      <Grid>
+        <Grid.Col span={4}>
+          <MesComponent></MesComponent>
+        </Grid.Col>
+        <Grid.Col span={4}>
+          <MesComponent></MesComponent>
+        </Grid.Col>
+        <Grid.Col span={4}>
+          <MesComponent></MesComponent>
+        </Grid.Col>
+      </Grid>
     </Container>
   )
 }
