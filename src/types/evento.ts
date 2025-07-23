@@ -15,7 +15,7 @@ export const EventoSchema = z.object({
     .min(1, 'el valor minimo es 1')
     .max(1000, 'el valor maximo es 1000'),
   fecha: z.number(),
-  tipo: z.enum(['income', 'expense']),
+  tipo: z.enum(['ingreso', 'gasto']),
   adjunto: z.string().optional(),
 })
 

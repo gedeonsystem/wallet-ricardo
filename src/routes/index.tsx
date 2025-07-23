@@ -1,12 +1,44 @@
 import MesComponent from '@/components/MesComponent'
 import { Button, Container, Flex, NumberInput, Text, Grid } from '@mantine/core'
 import { createFileRoute } from '@tanstack/react-router'
+import type { EventoType } from '@/types/evento'
+import type { MesType } from '@/types/mes'
+import { useQuery } from '@tanstack/react-query'
+import DataRepo from '@/api/datasource'
+import { crearMeses } from '@/utils/Meses'
+import React from 'react'
 
 export const Route = createFileRoute('/')({
   component: App,
 })
 
 function App() {
+  const [balanceInicial, setBalanceInicial] = React.useState(0)
+
+  const eventosQuery = useQuery<EventoType[], Error>({
+    queryKey: ['GET_EVENTOS'],
+    queryFn: async () => {
+      const response = await DataRepo.getEventos()
+      return response
+    },
+  })
+
+  const mesQuery = useQuery<MesType[], Error, MesType[], [string, string]>({
+    refetchOnMount: true,
+    enabled: Boolean(eventosQuery.data),
+    queryKey: ['CREAR_MESES', JSON.stringify(eventosQuery.data)],
+    queryFn: async ({ queryKey }) => {
+      const [, events] = queryKey
+      const response = crearMeses(balanceInicial, JSON.parse(events))
+      return response
+    },
+  })
+
+  //const isLoading = isLoadingOrRefetchQuery(eventsQuery, monthsQuery)
+  //const [prompt, setPrompt] = React.useState('What is the amount of my salary')
+  const { data: eventos = [] } = eventosQuery
+  const { data: meses = [] } = mesQuery
+
   return (
     <Container my="xl">
       <Flex
@@ -17,19 +49,28 @@ function App() {
         wrap="wrap"
       >
         <Text size="lg">Dinero Inicial</Text>
-        <NumberInput placeholder="0" />
-        <Button size="md">Calcular</Button>
+        <NumberInput
+          min={0}
+          value={balanceInicial}
+          onChange={(value) => setBalanceInicial(Number(value))}
+          placeholder={balanceInicial.toString()}
+        />
+        <Button
+          onClick={() => {
+            console.log('reiniciar')
+            mesQuery.refetch()
+          }}
+          size="md"
+        >
+          Calcular
+        </Button>
       </Flex>
       <Grid>
-        <Grid.Col span={4}>
-          <MesComponent></MesComponent>
-        </Grid.Col>
-        <Grid.Col span={4}>
-          <MesComponent></MesComponent>
-        </Grid.Col>
-        <Grid.Col span={4}>
-          <MesComponent></MesComponent>
-        </Grid.Col>
+        {meses.map((mes) => (
+          <Grid.Col span={4}>
+            <MesComponent key={`${mes.mes}-${mes.anio}`} data={mes} />
+          </Grid.Col>
+        ))}
       </Grid>
     </Container>
   )

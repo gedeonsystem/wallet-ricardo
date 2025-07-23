@@ -3,7 +3,6 @@ import { v4 as uuid } from 'uuid'
 import DataDS from '@/api/domain/ds/DataDS'
 
 import type { EventoType, EventoCreateType } from '@/types/evento'
-import queryClient from '@api/datasource/query'
 import dayjs from 'dayjs'
 
 const defaultEvents: EventoType[] = [
@@ -13,7 +12,7 @@ const defaultEvents: EventoType[] = [
     descripcion: 'Monthly salary',
     monto: 5000,
     fecha: dayjs('2024-12-15').unix(),
-    tipo: 'income',
+    tipo: 'ingreso',
   },
   {
     id: uuid(),
@@ -21,7 +20,7 @@ const defaultEvents: EventoType[] = [
     descripcion: 'Monthly rent',
     monto: 1000,
     fecha: dayjs('2024-12-27').unix(),
-    tipo: 'expense',
+    tipo: 'gasto',
   },
   {
     id: uuid(),
@@ -29,7 +28,7 @@ const defaultEvents: EventoType[] = [
     descripcion: 'Weekly groceries',
     monto: 200,
     fecha: dayjs('2024-12-29').unix(),
-    tipo: 'expense',
+    tipo: 'ingreso',
   },
   {
     id: uuid(),
@@ -37,7 +36,7 @@ const defaultEvents: EventoType[] = [
     descripcion: 'Bought some items on Amazon',
     monto: 200,
     fecha: dayjs('2025-01-15').unix(),
-    tipo: 'expense',
+    tipo: 'gasto',
   },
   {
     id: uuid(),
@@ -45,7 +44,7 @@ const defaultEvents: EventoType[] = [
     descripcion: "I won't never recovery financially from this",
     monto: 4800,
     fecha: dayjs('2025-01-15').unix(),
-    tipo: 'expense',
+    tipo: 'ingreso',
   },
   {
     id: uuid(),
@@ -53,7 +52,7 @@ const defaultEvents: EventoType[] = [
     descripcion: 'Weekly groceries',
     monto: 5000,
     fecha: dayjs('2025-01-20').unix(),
-    tipo: 'income',
+    tipo: 'ingreso',
   },
 ]
 

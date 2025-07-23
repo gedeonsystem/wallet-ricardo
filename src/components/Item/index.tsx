@@ -6,16 +6,17 @@ import {
   IconReceipt2,
   IconUserPlus,
 } from '@tabler/icons-react'
-import { Group, Paper, Text, SimpleGrid } from '@mantine/core'
+import dayjs from 'dayjs'
+import { Group, Paper, Text } from '@mantine/core'
 import classes from './Item.module.css'
+import type { EventoType } from '@/types/evento'
 
 type ItemProps = {
-  Titulo: string
-  Valor: number
-  Fecha: number
+  data: EventoType
 }
 
 export default function Item(props: ItemProps) {
+  const { id, nombre, descripcion, monto, fecha, tipo, adjunto } = props.data
   const icons = {
     user: IconUserPlus,
     discount: IconDiscount2,
@@ -26,18 +27,18 @@ export default function Item(props: ItemProps) {
   const Icon = icons['user']
 
   return (
-    <Paper withBorder p="md" radius="md" key={props.Titulo}>
+    <Paper withBorder p="md" radius="md" key={id}>
       <Group justify="space-between">
         <Text size="xs" c="dimmed" className={classes.title}>
-          {props.Titulo}
+          {nombre}
         </Text>
         <Icon className={classes.icon} size={22} stroke={1.5} />
       </Group>
 
-      <Group align="flex-end" gap="xs" mt={25}>
-        <Text className={classes.value}>{props.Valor}</Text>
+      <Group align="flex-end" gap="xs" mt={10}>
+        <Text className={classes.value}>{monto}</Text>
         <Text
-          c={props.Valor > 0 ? 'teal' : 'red'}
+          c={tipo === 'ingreso' ? 'teal' : 'red'}
           fz="sm"
           fw={500}
           className={classes.diff}
@@ -45,7 +46,7 @@ export default function Item(props: ItemProps) {
       </Group>
 
       <Text fz="xs" c="dimmed" mt={7}>
-        dayjs(props.Fecha)
+        {dayjs(fecha).format('DD/MM/YYYY').toString()}
       </Text>
     </Paper>
   )
