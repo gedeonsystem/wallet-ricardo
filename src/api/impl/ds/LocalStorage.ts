@@ -106,10 +106,10 @@ class LocalStorageDS extends DataDS {
       throw new Error('Error al crear Evento')
     }
   }
-  async actualizarEvento(evento: EventoType) {
+  async actualizarEvento(evento: EventoCreateType, id: string) {
     try {
       const eventos = this.cargarEventos()
-      const Index = eventos.findIndex((e) => e.id === evento.id)
+      const Index = eventos.findIndex((e) => e.id === id)
 
       if (Index === -1) {
         throw new Error('Evento no encontrado')
@@ -119,7 +119,7 @@ class LocalStorageDS extends DataDS {
 
       newEventos[Index] = {
         ...newEventos[Index],
-        ...event,
+        ...evento,
       }
 
       console.log('Evento actualizado', newEventos[Index])

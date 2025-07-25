@@ -7,7 +7,10 @@ abstract class DataDS {
 
   abstract crearEvento(evento: EventoCreateType): Promise<boolean>
 
-  abstract actualizarEvento(event: EventoType): Promise<boolean>
+  abstract actualizarEvento(
+    event: EventoCreateType,
+    id: string,
+  ): Promise<boolean>
 
   abstract eliminarEvento(id: string): Promise<boolean>
 

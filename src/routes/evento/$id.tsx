@@ -10,7 +10,11 @@ import {
 import { DateInput } from '@mantine/dates'
 import { createFileRoute, useNavigate, useParams } from '@tanstack/react-router'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { EventoCreateSchema, type EventoCreateType } from '@/types/evento'
+import {
+  EventoCreateSchema,
+  type EventoCreateType,
+  type EventoType,
+} from '@/types/evento'
 import DataRepo from '@/api/datasource'
 import dayjs from 'dayjs'
 import React, { useState } from 'react'
@@ -47,18 +51,6 @@ function RouteComponent() {
 
   const [tipoevento, setTipoevento] = useState<string | null>('')
   const [fechaEvento, setFechaEvento] = useState<string | null>(null)
-  const [monto, setMonto] = useState<string | number>('')
-
-  React.useEffect(() => {
-    if (mode === 'new' || !eventoQuery.data) {
-      return
-    }
-    formEvento.setFieldValue('nombre', eventoQuery.data.nombre)
-    formEvento.setFieldValue('descripcion', eventoQuery.data.descripcion)
-    setMonto(eventoQuery.data.monto)
-    setTipoevento(eventoQuery.data.tipo)
-    setFechaEvento(dayjs.unix(eventoQuery.data.fecha).format('YYYY-MM-dd'))
-  }, [eventoQuery.data, mode])
 
   const mutationSave = useMutation({
     mutationFn: async (data: EventoCreateType) => {
@@ -67,13 +59,36 @@ function RouteComponent() {
     },
   })
 
+  const mutationUpdate = useMutation({
+    mutationFn: async (data: EventoCreateType) => {
+      console.log(data)
+      const response = await DataRepo.actualizarEvento(data, id)
+      return response
+    },
+  })
+
+  React.useEffect(() => {
+    if (mode === 'new' || !eventoQuery.data) {
+      return
+    }
+    formEvento.setFieldValue('nombre', eventoQuery.data.nombre)
+    formEvento.setFieldValue('descripcion', eventoQuery.data.descripcion)
+    formEvento.setFieldValue('monto', eventoQuery.data.monto)
+    setTipoevento(eventoQuery.data.tipo)
+    setFechaEvento(dayjs.unix(eventoQuery.data.fecha).format('YYYY-MM-DD'))
+  }, [eventoQuery.data, mode])
+
   const formEvento = useForm({
     defaultValues: defaultValues,
     validators: {
       onSubmit: EventoCreateSchema,
     },
     onSubmit: (values) => {
-      mutationSave.mutate(values.value)
+      if (mode === 'edit') {
+        mutationUpdate.mutate(values.value)
+      } else {
+        mutationSave.mutate(values.value)
+      }
     },
     onSubmitInvalid(values) {
       console.error('Error en el formulario', formEvento.state.errors[0])

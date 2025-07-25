@@ -43,7 +43,9 @@ export const crearMeses = async (
     const total = balance.ingreso - balance.gasto
 
     meses.push({
-      titulo: dayjs(anio + '-' + mes_titulo + '-1').format('MMMM'),
+      titulo: dayjs(new Date(Number(anio), Number(mes_titulo), 1)).format(
+        'MMMM',
+      ),
       mes: dayjs().month(Number(mes_titulo)).month(),
       anio: Number(anio),
       eventos,

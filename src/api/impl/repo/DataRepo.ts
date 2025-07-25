@@ -21,8 +21,11 @@ class DataRepo {
     return this.data.crearEvento(evento)
   }
 
-  async actualizarEvento(evento: EventoType): Promise<boolean> {
-    return this.data.actualizarEvento(evento)
+  async actualizarEvento(
+    evento: EventoCreateType,
+    id: string,
+  ): Promise<boolean> {
+    return this.data.actualizarEvento(evento, id)
   }
 
   async eliminarEvento(id: string): Promise<boolean> {
