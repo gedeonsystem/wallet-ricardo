@@ -6,7 +6,6 @@ import {
   NumberInput,
   Text,
   Grid,
-  useMantineTheme,
   MantineProvider,
 } from '@mantine/core'
 import { createFileRoute } from '@tanstack/react-router'
@@ -48,10 +47,8 @@ function App() {
   const { data: eventos = [] } = eventosQuery
   const { data: meses = [] } = mesQuery
 
-  const theme = useMantineTheme()
-
   return (
-    <MantineProvider defaultColorScheme="dark">
+    <MantineProvider defaultColorScheme="light">
       <Container my="xl">
         <Flex
           gap="md"

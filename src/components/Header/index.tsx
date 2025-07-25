@@ -1,12 +1,21 @@
 import { Link } from '@tanstack/react-router'
 
 import { IconSearch, IconFlame, IconArrowsExchange } from '@tabler/icons-react'
-import { Autocomplete, Burger, Group, Tooltip } from '@mantine/core'
+import {
+  ActionIcon,
+  Autocomplete,
+  Burger,
+  Group,
+  Tooltip,
+  useMantineColorScheme,
+} from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import classes from './Header.module.css'
+import { create } from 'zustand'
 
 export default function Header() {
   const [opened, { toggle }] = useDisclosure(false)
+  const { colorScheme, setColorScheme } = useMantineColorScheme()
 
   return (
     <header className={classes.header}>
@@ -16,9 +25,15 @@ export default function Header() {
           <Tooltip label="Home">
             <IconFlame stroke={2} />
           </Tooltip>
-          <Tooltip label="Cambiar Tema">
-            <IconArrowsExchange stroke={2} />
-          </Tooltip>
+          <ActionIcon
+            onClick={() => {
+              setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')
+            }}
+          >
+            <Tooltip label="Cambiar Tema">
+              <IconArrowsExchange stroke={2} />
+            </Tooltip>
+          </ActionIcon>
         </Group>
 
         <Group>
