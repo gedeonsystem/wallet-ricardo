@@ -5,7 +5,14 @@ import {
   IconTrashX,
 } from '@tabler/icons-react'
 import dayjs from 'dayjs'
-import { Group, Paper, Text, ThemeIcon, ActionIcon } from '@mantine/core'
+import {
+  Group,
+  Paper,
+  Text,
+  ThemeIcon,
+  ActionIcon,
+  Tooltip,
+} from '@mantine/core'
 import { modals } from '@mantine/modals'
 import classes from './Item.module.css'
 import type { EventoType } from '@/types/evento'
@@ -59,15 +66,21 @@ export default function Item(props: ItemProps) {
   return (
     <Paper key={id} mt={4} p={4}>
       <Group justify="space-between">
-        <Text size="xs" c="dimmed" className={classes.title}>
-          {nombre}
-        </Text>
+        <Tooltip label={descripcion}>
+          <Text size="xs" c="dimmed" className={classes.title}>
+            {nombre}
+          </Text>
+        </Tooltip>
         <Group justify="space-between">
           <ActionIcon color="red" size={24}>
-            <IconTrashX size={20} stroke={1.5} onClick={confirmarEliminar} />
+            <Tooltip label="Eliminar Evento">
+              <IconTrashX size={20} stroke={1.5} onClick={confirmarEliminar} />
+            </Tooltip>
           </ActionIcon>
           <ActionIcon size={24}>
-            <IconEdit size={20} stroke={1.5} onClick={confirmarEdicion} />
+            <Tooltip label="Editar Evento">
+              <IconEdit size={20} stroke={1.5} onClick={confirmarEdicion} />
+            </Tooltip>
           </ActionIcon>
         </Group>
       </Group>

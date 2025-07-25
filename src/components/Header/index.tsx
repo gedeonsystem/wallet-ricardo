@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 
-import { IconSearch, IconFlame } from '@tabler/icons-react'
-import { Autocomplete, Burger, Group } from '@mantine/core'
+import { IconSearch, IconFlame, IconArrowsExchange } from '@tabler/icons-react'
+import { Autocomplete, Burger, Group, Tooltip } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import classes from './Header.module.css'
 
@@ -13,7 +13,12 @@ export default function Header() {
       <div className={classes.inner}>
         <Group>
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
-          <IconFlame stroke={2} />
+          <Tooltip label="Home">
+            <IconFlame stroke={2} />
+          </Tooltip>
+          <Tooltip label="Cambiar Tema">
+            <IconArrowsExchange stroke={2} />
+          </Tooltip>
         </Group>
 
         <Group>

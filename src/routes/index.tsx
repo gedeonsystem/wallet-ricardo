@@ -1,5 +1,14 @@
 import MesComponent from '@/components/MesComponent'
-import { Button, Container, Flex, NumberInput, Text, Grid } from '@mantine/core'
+import {
+  Button,
+  Container,
+  Flex,
+  NumberInput,
+  Text,
+  Grid,
+  useMantineTheme,
+  MantineProvider,
+} from '@mantine/core'
 import { createFileRoute } from '@tanstack/react-router'
 import type { EventoType } from '@/types/evento'
 import type { MesType } from '@/types/mes'
@@ -39,39 +48,44 @@ function App() {
   const { data: eventos = [] } = eventosQuery
   const { data: meses = [] } = mesQuery
 
+  const theme = useMantineTheme()
+
   return (
-    <Container my="xl">
-      <Flex
-        gap="md"
-        justify="center"
-        align="center"
-        direction="row"
-        wrap="wrap"
-      >
-        <Text size="lg">Dinero Inicial</Text>
-        <NumberInput
-          min={0}
-          value={balanceInicial}
-          onChange={(value) => setBalanceInicial(Number(value))}
-          placeholder={balanceInicial.toString()}
-        />
-        <Button
-          onClick={() => {
-            console.log('reiniciar')
-            mesQuery.refetch()
-          }}
-          size="md"
+    <MantineProvider defaultColorScheme="dark">
+      <Container my="xl">
+        <Flex
+          gap="md"
+          justify="center"
+          align="center"
+          direction="row"
+          wrap="wrap"
+          p={12}
         >
-          Calcular
-        </Button>
-      </Flex>
-      <Grid>
-        {meses.map((mes) => (
-          <Grid.Col span={4}>
-            <MesComponent key={`${mes.mes}-${mes.anio}`} data={mes} />
-          </Grid.Col>
-        ))}
-      </Grid>
-    </Container>
+          <Text size="lg">Dinero Inicial</Text>
+          <NumberInput
+            min={0}
+            value={balanceInicial}
+            onChange={(value) => setBalanceInicial(Number(value))}
+            placeholder={balanceInicial.toString()}
+          />
+          <Button
+            onClick={() => {
+              console.log('reiniciar')
+              mesQuery.refetch()
+            }}
+            size="md"
+          >
+            Calcular
+          </Button>
+        </Flex>
+        <Grid>
+          {meses.map((mes) => (
+            <Grid.Col span={4}>
+              <MesComponent key={`${mes.mes}-${mes.anio}`} data={mes} />
+            </Grid.Col>
+          ))}
+        </Grid>
+      </Container>
+    </MantineProvider>
   )
 }
