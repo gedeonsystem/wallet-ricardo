@@ -4,7 +4,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 
 import * as TanStackQueryProvider from './integrations/tanstack-query/root-provider.tsx'
 import * as Mantine from './integrations/mantine/root-provider.tsx'
-
+import { ModalsProvider } from '@mantine/modals'
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 
@@ -40,7 +40,9 @@ if (rootElement && !rootElement.innerHTML) {
     <StrictMode>
       <TanStackQueryProvider.Provider>
         <Mantine.Provider>
-          <RouterProvider router={router} />
+          <ModalsProvider>
+            <RouterProvider router={router} />
+          </ModalsProvider>
         </Mantine.Provider>
       </TanStackQueryProvider.Provider>
     </StrictMode>,

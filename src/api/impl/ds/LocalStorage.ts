@@ -11,7 +11,7 @@ const defaultEvents: EventoType[] = [
     nombre: 'Salary',
     descripcion: 'Monthly salary',
     monto: 5000,
-    fecha: dayjs('2024-12-15').unix(),
+    fecha: dayjs('2025-11-15').unix(),
     tipo: 'ingreso',
   },
   {
@@ -19,7 +19,7 @@ const defaultEvents: EventoType[] = [
     nombre: 'Rent',
     descripcion: 'Monthly rent',
     monto: 1000,
-    fecha: dayjs('2024-12-27').unix(),
+    fecha: dayjs('2025-11-25').unix(),
     tipo: 'gasto',
   },
   {
@@ -27,7 +27,7 @@ const defaultEvents: EventoType[] = [
     nombre: 'Groceries',
     descripcion: 'Weekly groceries',
     monto: 200,
-    fecha: dayjs('2024-12-29').unix(),
+    fecha: dayjs('2025-11-30').unix(),
     tipo: 'ingreso',
   },
   {
@@ -35,7 +35,7 @@ const defaultEvents: EventoType[] = [
     nombre: 'Amazon shopping',
     descripcion: 'Bought some items on Amazon',
     monto: 200,
-    fecha: dayjs('2025-01-15').unix(),
+    fecha: dayjs('2025-12-15').unix(),
     tipo: 'gasto',
   },
   {
@@ -43,7 +43,7 @@ const defaultEvents: EventoType[] = [
     nombre: 'New brand RTX 5090',
     descripcion: "I won't never recovery financially from this",
     monto: 4800,
-    fecha: dayjs('2025-01-15').unix(),
+    fecha: dayjs('2025-12-15').unix(),
     tipo: 'ingreso',
   },
   {
@@ -51,7 +51,7 @@ const defaultEvents: EventoType[] = [
     nombre: 'Salary',
     descripcion: 'Weekly groceries',
     monto: 5000,
-    fecha: dayjs('2025-01-20').unix(),
+    fecha: dayjs('2025-12-30').unix(),
     tipo: 'ingreso',
   },
 ]

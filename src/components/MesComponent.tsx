@@ -1,4 +1,4 @@
-import { Card, Paper, Group, Text } from '@mantine/core'
+import { Card, Paper, Group, Title, Container } from '@mantine/core'
 import Item from '@/components/Item'
 import dayjs from 'dayjs'
 import ItemTotal from './ItemTotal'
@@ -12,12 +12,12 @@ export default function MesComponent(props: MesProps) {
   const { titulo, mes, flujo, eventos } = props.data
 
   return (
-    <Card>
-      <Text>{titulo}</Text>
+    <Card shadow="xs" p="md">
+      <Title order={4}>{titulo}</Title>
       {eventos.map((evento) => (
         <Item key={evento.id} data={evento}></Item>
       ))}
-      <Paper shadow="xs" p="xl">
+      <Paper mt={5} p={5}>
         <ItemTotal nombre="Income" valor={flujo.ingreso.toString()} />
         <ItemTotal nombre="Expense" valor={flujo.gasto.toString()} />
         <ItemTotal nombre="Monthly" valor={flujo.mensual.toString()} />

@@ -5,19 +5,8 @@ import { Autocomplete, Burger, Group } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import classes from './Header.module.css'
 
-const links = [
-  { link: '/', label: 'Inicio' },
-  { link: '/evento/new', label: 'Nuevo' },
-]
-
 export default function Header() {
   const [opened, { toggle }] = useDisclosure(false)
-
-  const items = links.map((link) => (
-    <a key={link.label} href={link.link} className={classes.link}>
-      {link.label}
-    </a>
-  ))
 
   return (
     <header className={classes.header}>
@@ -29,7 +18,16 @@ export default function Header() {
 
         <Group>
           <Group ml={50} gap={5} className={classes.links} visibleFrom="sm">
-            {items}
+            <Link to="/" className={classes.link}>
+              Inicio
+            </Link>
+            <Link
+              to="/evento/$id"
+              params={{ id: 'new' }}
+              className={classes.link}
+            >
+              Nuevo Evento
+            </Link>
           </Group>
           <Autocomplete
             className={classes.search}
