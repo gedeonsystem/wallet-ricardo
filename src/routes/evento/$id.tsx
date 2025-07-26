@@ -55,11 +55,18 @@ function RouteComponent() {
   const mutationSave = useMutation({
     mutationFn: async (data: EventoCreateType) => {
       setGuardado(true)
-      console.log('guardando')
       data.fecha = dayjs(fechaEvento).unix()
       if (tipoevento === 'ingreso') data.tipo = 'ingreso'
       else data.tipo = 'gasto'
-      data.adjunto = (await getBase64(adjunto)) + ''
+
+      let adj: File | null | undefined = adjunto
+      if (adj instanceof File) {
+        data.adjunto = (await getBase64(adj)) + ''
+      } else {
+        // Handle the case where myFile is null or undefined
+        console.log('No es un tipo de Archivo valido')
+      }
+
       const response = await DataRepo.createEvento(data)
       return response
     },
@@ -67,7 +74,11 @@ function RouteComponent() {
 
   const mutationUpdate = useMutation({
     mutationFn: async (data: EventoCreateType) => {
-      console.log(data)
+      setGuardado(true)
+      data.fecha = dayjs(fechaEvento).unix()
+      if (tipoevento === 'ingreso') data.tipo = 'ingreso'
+      else data.tipo = 'gasto'
+      data.adjunto = (await getBase64(adjunto)) + ''
       const response = await DataRepo.actualizarEvento(data, id)
       return response
     },
