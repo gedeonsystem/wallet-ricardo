@@ -42,9 +42,6 @@ function App() {
     },
   })
 
-  //const isLoading = isLoadingOrRefetchQuery(eventsQuery, monthsQuery)
-  //const [prompt, setPrompt] = React.useState('What is the amount of my salary')
-  const { data: eventos = [] } = eventosQuery
   const { data: meses = [] } = mesQuery
 
   return (

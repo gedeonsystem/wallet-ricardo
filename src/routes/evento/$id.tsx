@@ -10,7 +10,7 @@ import {
   Image,
 } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
-import { createFileRoute, useNavigate, useParams } from '@tanstack/react-router'
+import { createFileRoute, useParams } from '@tanstack/react-router'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { EventoCreateSchema, type EventoCreateType } from '@/types/evento'
 import DataRepo from '@/api/datasource'
@@ -207,7 +207,7 @@ function RouteComponent() {
 
           <formEvento.Field
             name="adjunto"
-            children={(field) => (
+            children={() => (
               <FileInput
                 pb={20}
                 accept="image/png,image/jpeg"
@@ -246,7 +246,7 @@ function RouteComponent() {
   )
 }
 
-const getBase64 = (file) => {
+const getBase64 = (file: File) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onload = () => resolve(reader.result)
