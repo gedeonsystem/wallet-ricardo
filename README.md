@@ -41,6 +41,23 @@ npm run format
 npm run check
 ```
 
+## FUNCIONALIDAD
+La aplicacion permite registrar eventos de gastos mensuales y llevar un registro de lo gastado a lo gargo del año.
+
+El desarollo de la aplicacion esta dividida en la capa de Datos que esta implementada usando LocalStorage para almacenar los arreglos de los eventos.
+La Capa visual que usa Mantine,MantineUi apara los componentes y para los iconos se uso tablerICONS.
+
+El diseño visual esta compuesto por un header que contiene el menu con los botones de acciones y de bsuqeda, y un header informativo.
+
+En el panel central se podran observar CARDS que contiene la informacion de los eventos agrupadas por mes
+
+Cada Coponente de mes, llama a un compunente Item que contiene un resumido del evento.
+
+El Item evento esta compuesto por dos botes, que permiten eliminar y editar el evento, asi mismo al colocarnos sobre el nombre del evento aparece un tooltip con el nombre del evento.
+
+Si damos click sobre el nombre o la fecha del evento nos mostrar una ventana de dialogo con la imagen del evento.
+
+
 
 
 ## Routing
