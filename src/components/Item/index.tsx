@@ -12,6 +12,8 @@ import {
   ThemeIcon,
   ActionIcon,
   Tooltip,
+  Image,
+  Center,
 } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import classes from './Item.module.css'
@@ -63,15 +65,31 @@ export default function Item(props: ItemProps) {
       },
     })
 
+  const mostrarImagen = () =>
+    modals.open({
+      title: 'Imagen del Evento',
+      centered: true,
+      children: (
+        <Center h={200}>
+          <Image radius="md" h={200} w="auto" fit="contain" src={adjunto} />
+        </Center>
+      ),
+    })
+
   return (
     <Paper key={id} mt={4} p={4}>
       <Group justify="space-between">
         <Tooltip label={descripcion}>
-          <Text size="xs" c="dimmed" className={classes.title}>
+          <Text
+            size="xs"
+            c="dimmed"
+            className={classes.title}
+            onClick={mostrarImagen}
+          >
             {nombre}
           </Text>
         </Tooltip>
-        <Group justify="space-between">
+        <Group justify="flex-end">
           <ActionIcon color="red" size={24}>
             <Tooltip label="Eliminar Evento">
               <IconTrashX size={20} stroke={1.5} onClick={confirmarEliminar} />
@@ -110,7 +128,7 @@ export default function Item(props: ItemProps) {
             ${monto}
           </Text>
         </Group>
-        <Text fz="xs" c="dimmed">
+        <Text fz="xs" c="dimmed" onClick={mostrarImagen}>
           {dayjs.unix(fecha).format('YYYY-MM-DD')}
         </Text>
       </Group>
