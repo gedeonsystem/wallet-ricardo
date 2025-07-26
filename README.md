@@ -41,7 +41,7 @@ npm run format
 npm run check
 ```
 
-##FUNCIONALIDAD
+## FUNCIONALIDAD
 La aplicacion permite registrar eventos de gastos mensuales y llevar un registro de lo gastado a lo gargo del año.
 
 El desarollo de la aplicacion esta dividida en la capa de Datos que esta implementada usando LocalStorage para almacenar los arreglos de los eventos.
