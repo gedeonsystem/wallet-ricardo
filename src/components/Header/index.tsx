@@ -11,7 +11,6 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import classes from './Header.module.css'
-import { create } from 'zustand'
 
 export default function Header() {
   const [opened, { toggle }] = useDisclosure(false)

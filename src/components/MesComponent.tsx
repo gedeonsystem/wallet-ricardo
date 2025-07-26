@@ -1,6 +1,5 @@
-import { Card, Paper, Group, Title, Container } from '@mantine/core'
+import { Card, Paper, Title } from '@mantine/core'
 import Item from '@/components/Item'
-import dayjs from 'dayjs'
 import ItemTotal from './ItemTotal'
 import type { MesType } from '@/types/mes'
 
@@ -9,7 +8,7 @@ type MesProps = {
 }
 
 export default function MesComponent(props: MesProps) {
-  const { titulo, mes, flujo, eventos } = props.data
+  const { titulo, flujo, eventos } = props.data
 
   return (
     <Card shadow="xs" p="md">

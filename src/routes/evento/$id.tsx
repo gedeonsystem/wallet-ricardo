@@ -6,15 +6,13 @@ import {
   Container,
   TextInput,
   NumberInput,
+  Center,
+  Image,
 } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
 import { createFileRoute, useNavigate, useParams } from '@tanstack/react-router'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import {
-  EventoCreateSchema,
-  type EventoCreateType,
-  type EventoType,
-} from '@/types/evento'
+import { EventoCreateSchema, type EventoCreateType } from '@/types/evento'
 import DataRepo from '@/api/datasource'
 import dayjs from 'dayjs'
 import React, { useState } from 'react'
@@ -28,8 +26,6 @@ export const Route = createFileRoute('/evento/$id')({
 function RouteComponent() {
   const opciones = ['ingreso', 'gasto']
   const { id } = useParams({ from: '/evento/$id' })
-
-  const navigate = useNavigate()
   const mode = id === 'new' ? 'new' : 'edit'
 
   const eventoQuery = useQuery<EventoCreateType, Error>({
@@ -51,9 +47,10 @@ function RouteComponent() {
   }
 
   const [guardado, setGuardado] = useState<boolean>(false)
-  const [tipoevento, setTipoevento] = useState<string>('')
-  const [fechaEvento, setFechaEvento] = useState<string>()
-  const [adjunto, setAdjunto] = useState<File>()
+  const [tipoevento, setTipoevento] = useState<string | null>('')
+  const [fechaEvento, setFechaEvento] = useState<string | null>()
+  const [adjunto, setAdjunto] = useState<File | null>()
+  const [imagen, setImagen] = useState<string>()
 
   const mutationSave = useMutation({
     mutationFn: async (data: EventoCreateType) => {
@@ -85,7 +82,7 @@ function RouteComponent() {
     formEvento.setFieldValue('monto', eventoQuery.data.monto)
     setTipoevento(eventoQuery.data.tipo)
     setFechaEvento(dayjs.unix(eventoQuery.data.fecha).format('YYYY-MM-DD'))
-    //setAdjunto(eventoQuery.data.adjunto)
+    setImagen(eventoQuery.data.adjunto)
   }, [eventoQuery.data, mode])
 
   const formEvento = useForm({
@@ -101,7 +98,7 @@ function RouteComponent() {
       }
     },
     onSubmitInvalid(values) {
-      console.error('Error en el formulario', formEvento.state.errors[0])
+      console.error('Error en el formulario', values)
     },
   })
 
@@ -212,6 +209,7 @@ function RouteComponent() {
             name="adjunto"
             children={(field) => (
               <FileInput
+                pb={20}
                 accept="image/png,image/jpeg"
                 label="Archivo"
                 placeholder="Archivo Adjunto"
@@ -221,7 +219,12 @@ function RouteComponent() {
             )}
           />
 
+          <Center h={200}>
+            <Image radius="md" h={200} w="auto" fit="contain" src={imagen} />
+          </Center>
+
           <Button
+            mt={20}
             disabled={guardado}
             fullWidth
             type="reset"
