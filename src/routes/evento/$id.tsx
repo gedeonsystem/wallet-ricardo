@@ -63,7 +63,6 @@ function RouteComponent() {
       if (adj instanceof File) {
         data.adjunto = (await getBase64(adj)) + ''
       } else {
-        // Handle the case where myFile is null or undefined
         console.log('No es un tipo de Archivo valido')
       }
 
@@ -78,7 +77,12 @@ function RouteComponent() {
       data.fecha = dayjs(fechaEvento).unix()
       if (tipoevento === 'ingreso') data.tipo = 'ingreso'
       else data.tipo = 'gasto'
-      data.adjunto = (await getBase64(adjunto)) + ''
+      let adj: File | null | undefined = adjunto
+      if (adj instanceof File) {
+        data.adjunto = (await getBase64(adj)) + ''
+      } else {
+        console.log('No es un tipo de Archivo valido')
+      }
       const response = await DataRepo.actualizarEvento(data, id)
       return response
     },
