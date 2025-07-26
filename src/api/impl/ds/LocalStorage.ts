@@ -93,7 +93,6 @@ class LocalStorageDS extends DataDS {
       const newEvento = {
         ...evento,
         id: uuid(),
-        fecha: dayjs().unix(),
       }
 
       const newEventos = [...eventos, newEvento]

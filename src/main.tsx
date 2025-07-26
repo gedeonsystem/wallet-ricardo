@@ -5,12 +5,14 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 import * as TanStackQueryProvider from './integrations/tanstack-query/root-provider.tsx'
 import * as Mantine from './integrations/mantine/root-provider.tsx'
 import { ModalsProvider } from '@mantine/modals'
+import { Notifications } from '@mantine/notifications'
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 
 import './styles.css'
 import '@mantine/core/styles.css'
 import '@mantine/dates/styles.css'
+import '@mantine/notifications/styles.css'
 import reportWebVitals from './reportWebVitals.ts'
 
 // Create a new router instance
@@ -41,6 +43,7 @@ if (rootElement && !rootElement.innerHTML) {
       <TanStackQueryProvider.Provider>
         <Mantine.Provider>
           <ModalsProvider>
+            <Notifications />
             <RouterProvider router={router} />
           </ModalsProvider>
         </Mantine.Provider>

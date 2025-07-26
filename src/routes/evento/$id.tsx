@@ -19,6 +19,7 @@ import DataRepo from '@/api/datasource'
 import dayjs from 'dayjs'
 import React, { useState } from 'react'
 import { useForm } from '@tanstack/react-form'
+import { notifications } from '@mantine/notifications'
 
 export const Route = createFileRoute('/evento/$id')({
   component: RouteComponent,
@@ -49,11 +50,19 @@ function RouteComponent() {
     adjunto: '',
   }
 
-  const [tipoevento, setTipoevento] = useState<string | null>('')
-  const [fechaEvento, setFechaEvento] = useState<string | null>(null)
+  const [guardado, setGuardado] = useState<boolean>(false)
+  const [tipoevento, setTipoevento] = useState<string>('')
+  const [fechaEvento, setFechaEvento] = useState<string>()
+  const [adjunto, setAdjunto] = useState<File>()
 
   const mutationSave = useMutation({
     mutationFn: async (data: EventoCreateType) => {
+      setGuardado(true)
+      console.log('guardando')
+      data.fecha = dayjs(fechaEvento).unix()
+      if (tipoevento === 'ingreso') data.tipo = 'ingreso'
+      else data.tipo = 'gasto'
+      data.adjunto = (await getBase64(adjunto)) + ''
       const response = await DataRepo.createEvento(data)
       return response
     },
@@ -76,6 +85,7 @@ function RouteComponent() {
     formEvento.setFieldValue('monto', eventoQuery.data.monto)
     setTipoevento(eventoQuery.data.tipo)
     setFechaEvento(dayjs.unix(eventoQuery.data.fecha).format('YYYY-MM-DD'))
+    //setAdjunto(eventoQuery.data.adjunto)
   }, [eventoQuery.data, mode])
 
   const formEvento = useForm({
@@ -201,14 +211,26 @@ function RouteComponent() {
           <formEvento.Field
             name="adjunto"
             children={(field) => (
-              <FileInput label="Archivo" placeholder="Archivo Adjunto" />
+              <FileInput
+                accept="image/png,image/jpeg"
+                label="Archivo"
+                placeholder="Archivo Adjunto"
+                value={adjunto}
+                onChange={setAdjunto}
+              />
             )}
           />
 
           <Button
+            disabled={guardado}
             fullWidth
             type="reset"
             onClick={(event) => {
+              console.log('notificando')
+              notifications.show({
+                title: 'Wallet System',
+                message: 'Se Guardo el evento 🌟',
+              })
               event.preventDefault()
               formEvento.handleSubmit()
             }}
@@ -219,4 +241,13 @@ function RouteComponent() {
       </Card>
     </Container>
   )
+}
+
+const getBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = (error) => reject(error)
+    reader.readAsDataURL(file)
+  })
 }
