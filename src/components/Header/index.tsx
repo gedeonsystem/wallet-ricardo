@@ -11,10 +11,17 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import classes from './Header.module.css'
+import { openai } from '@ai-sdk/openai'
+import { generateText } from 'ai'
 
 export default function Header() {
   const [opened, { toggle }] = useDisclosure(false)
   const { colorScheme, setColorScheme } = useMantineColorScheme()
+
+  const { text } = await generateText({
+    model: openai('gpt-4-turbo'),
+    prompt: 'Write a vegetarian lasagna recipe for 4 people.',
+  })
 
   return (
     <header className={classes.header}>
